@@ -7,7 +7,7 @@
 #include "CandidateList.h"
 #include "LanguageBar.h"
 
-STDAPI CCompartmentEventSink::QueryInterface(REFIID riid,
+STDMETHODIMP CCompartmentEventSink::QueryInterface(REFIID riid,
                                              _Outptr_ void** ppvObj) {
   if (ppvObj == nullptr)
     return E_INVALIDARG;
@@ -43,7 +43,7 @@ STDAPI_(ULONG) CCompartmentEventSink::Release() {
   return cr;
 }
 
-STDAPI CCompartmentEventSink::OnChange(_In_ REFGUID guidCompartment) {
+STDMETHODIMP CCompartmentEventSink::OnChange(_In_ REFGUID guidCompartment) {
   return _callback(guidCompartment);
 }
 

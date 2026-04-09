@@ -27,7 +27,7 @@ class CClassFactory : public IClassFactory {
   STDMETHODIMP LockServer(BOOL fLock);
 };
 
-STDAPI CClassFactory::QueryInterface(REFIID riid, void** ppvObject) {
+STDMETHODIMP CClassFactory::QueryInterface(REFIID riid, void** ppvObject) {
   if (IsEqualIID(riid, IID_IClassFactory) || IsEqualIID(riid, IID_IUnknown)) {
     *ppvObject = this;
     DllAddRef();
@@ -47,7 +47,7 @@ STDAPI_(ULONG) CClassFactory::Release() {
   return g_cRefDll + 1;
 }
 
-STDAPI CClassFactory::CreateInstance(IUnknown* pUnkOuter,
+STDMETHODIMP CClassFactory::CreateInstance(IUnknown* pUnkOuter,
                                      REFIID riid,
                                      void** ppvObject) {
   WeaselTSF* pCase;
@@ -64,7 +64,7 @@ STDAPI CClassFactory::CreateInstance(IUnknown* pUnkOuter,
   return hr;
 }
 
-STDAPI CClassFactory::LockServer(BOOL fLock) {
+STDMETHODIMP CClassFactory::LockServer(BOOL fLock) {
   if (fLock)
     DllAddRef();
   else

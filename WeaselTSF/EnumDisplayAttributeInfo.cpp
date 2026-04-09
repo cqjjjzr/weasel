@@ -15,7 +15,7 @@ CEnumDisplayAttributeInfo::~CEnumDisplayAttributeInfo() {
   DllRelease();
 }
 
-STDAPI CEnumDisplayAttributeInfo::QueryInterface(REFIID riid,
+STDMETHODIMP CEnumDisplayAttributeInfo::QueryInterface(REFIID riid,
                                                  _Outptr_ void** ppvObj) {
   if (ppvObj == nullptr)
     return E_INVALIDARG;
@@ -51,7 +51,7 @@ STDAPI_(ULONG) CEnumDisplayAttributeInfo::Release() {
   return cr;
 }
 
-STDAPI CEnumDisplayAttributeInfo::Clone(
+STDMETHODIMP CEnumDisplayAttributeInfo::Clone(
     _Out_ IEnumTfDisplayAttributeInfo** ppEnum) {
   CEnumDisplayAttributeInfo* pClone = nullptr;
 
@@ -74,7 +74,7 @@ STDAPI CEnumDisplayAttributeInfo::Clone(
   return S_OK;
 }
 
-STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount,
+STDMETHODIMP CEnumDisplayAttributeInfo::Next(ULONG ulCount,
                                        __RPC__out_ecount_part(ulCount,
                                                               *pcFetched)
                                            ITfDisplayAttributeInfo** rgInfo,
@@ -116,12 +116,12 @@ STDAPI CEnumDisplayAttributeInfo::Next(ULONG ulCount,
   return (fetched == ulCount) ? S_OK : S_FALSE;
 }
 
-STDAPI CEnumDisplayAttributeInfo::Reset() {
+STDMETHODIMP CEnumDisplayAttributeInfo::Reset() {
   _index = 0;
   return S_OK;
 }
 
-STDAPI CEnumDisplayAttributeInfo::Skip(ULONG ulCount) {
+STDMETHODIMP CEnumDisplayAttributeInfo::Skip(ULONG ulCount) {
   if ((ulCount + _index) > 1 || (ulCount + _index) < ulCount) {
     _index = 1;
     return S_FALSE;
